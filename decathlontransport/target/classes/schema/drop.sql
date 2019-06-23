@@ -1,0 +1,2 @@
+USE DecathlonTransportDatabase;
+DROP DATABASE DecathlonTransportDatabase;
