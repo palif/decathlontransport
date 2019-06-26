@@ -14,6 +14,7 @@ import java.util.List;
 public class TransportRepositoryTest {
 
     private Transport addTransport, deleteTransport;
+    private Order addTransportOrder;
     private TransportRepository repo;
 
     @Before
@@ -23,13 +24,13 @@ public class TransportRepositoryTest {
         Status s1 = new Status();
         s1.setId(1);
 
-        Order o1 = new Order();
-        o1.setAddress("T1 address");
-        o1.setFirstName("T1");
-        o1.setLastName("T1");
-        o1.setPostalCode(11111);
-        o1.setTelephone("0700000000");
-        o1.setCity("T1 city");
+        addTransportOrder = new Order();
+        addTransportOrder.setAddress("T1 address");
+        addTransportOrder.setFirstName("T1");
+        addTransportOrder.setLastName("T1");
+        addTransportOrder.setPostalCode(11111);
+        addTransportOrder.setTelephone("0700000000");
+        addTransportOrder.setCity("T1 city");
 
         Order o2 = new Order();
         o2.setAddress("T2 address");
@@ -40,7 +41,7 @@ public class TransportRepositoryTest {
         o2.setCity("T2 city");
 
         addTransport = new Transport();
-        addTransport.setOrder(o1);
+        addTransport.setOrder(addTransportOrder);
         addTransport.setIssueDate(Calendar.getInstance().getTime());
         addTransport.setDeliveryDate(Calendar.getInstance().getTime());
         addTransport.setStatus(s1);
@@ -112,6 +113,13 @@ public class TransportRepositoryTest {
         Assert.assertNotNull("List is nulled",list);
         Assert.assertTrue("List is empty", list.size() > 0);
         testTransportObject(list);
+    }
+
+    @Test
+    public void testGetByOrderId() {
+        Transport t1 = repo.getByOrderId(addTransportOrder.getId());
+        Assert.assertNotNull(t1);
+        testTransportOrder(addTransport.getOrder(), addTransportOrder);
     }
 
     @Test

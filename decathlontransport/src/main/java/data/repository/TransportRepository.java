@@ -1,13 +1,13 @@
 package data.repository;
 
-import data.interfaces.Repository;
+import data.interfaces.ITransportRepository;
 import data.model.Transport;
-import data.util.JPAUtil;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 
-public class TransportRepository extends AbstractRepository<Transport> implements data.interfaces.TransportRepository<Transport> {
+public class TransportRepository extends AbstractRepository<Transport> implements ITransportRepository<Transport> {
 
     public TransportRepository() {
         super(Transport.class);
@@ -61,4 +61,25 @@ public class TransportRepository extends AbstractRepository<Transport> implement
         return false;
     }
 
+    @Override
+    public Transport getByOrderId(long id) {
+        EntityManager em = null;
+
+        try {
+            em = jpaUtil.getEntityManagerFactory(persistenceUnitName).createEntityManager();
+            Transport result = (Transport) em.createQuery("SELECT t FROM Transport t WHERE t.order.id = " + id).getResultList().get(0);
+            em.close();
+            return result;
+        }
+        catch (NoResultException e){
+            System.out.println("TransportRepo.getByOrderId No Result -> " + e.getMessage());
+        }
+        catch (Exception e){
+            System.out.println("Exception while trying to get entities by order Id -> " + e.getMessage());
+        }
+        finally {
+            if (em != null) em.close();
+        }
+        return null;
+    }
 }

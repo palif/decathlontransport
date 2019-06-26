@@ -2,7 +2,7 @@ package data.interfaces;
 
 import java.util.List;
 
-public interface OrderRepository<E> extends Repository<E> {
+public interface IOrderRepository<E> extends IRepository<E> {
 
     List<E> getAll(String name);
     List<E> getAll();

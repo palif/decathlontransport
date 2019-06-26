@@ -1,11 +1,11 @@
 package data.repository;
+import data.interfaces.IOrderRepository;
 import data.model.Order;
-import data.util.JPAUtil;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class OrderRepository extends AbstractRepository<Order> implements data.interfaces.OrderRepository<Order> {
+public class OrderRepository extends AbstractRepository<Order> implements IOrderRepository<Order> {
 
     public OrderRepository() {
         super(Order.class);
@@ -17,7 +17,7 @@ public class OrderRepository extends AbstractRepository<Order> implements data.i
 
     @Override
     public List<Order> getAll() {
-        EntityManager em = jpaUtil.getEntityManagerFactory().createEntityManager();
+        EntityManager em = jpaUtil.getEntityManagerFactory(persistenceUnitName).createEntityManager();
         try {
 
             List<Order> result = em.createQuery("SELECT o FROM " + Order.class.getName() + " o").getResultList();
@@ -33,7 +33,7 @@ public class OrderRepository extends AbstractRepository<Order> implements data.i
     @Override
     public List<Order> getAll(String name) {
 
-        EntityManager em = jpaUtil.getEntityManagerFactory().createEntityManager();
+        EntityManager em = jpaUtil.getEntityManagerFactory(persistenceUnitName).createEntityManager();
         try {
             List<Order> result = em.createQuery("SELECT dbo FROM Order dbo WHERE dbo.firstName LIKE '%" + name + "%' OR " +
                     "dbo.lastName LIKE '%" + name + "%'").getResultList();
@@ -51,7 +51,7 @@ public class OrderRepository extends AbstractRepository<Order> implements data.i
     @Override
     public Order get(long id) {
 
-        EntityManager em = jpaUtil.getEntityManagerFactory().createEntityManager();
+        EntityManager em = jpaUtil.getEntityManagerFactory(persistenceUnitName).createEntityManager();
 
         try {
             Order result = em.find(Order.class, id);

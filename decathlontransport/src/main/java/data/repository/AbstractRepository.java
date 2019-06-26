@@ -1,13 +1,12 @@
 package data.repository;
 
-import data.model.Order;
+import data.interfaces.IRepository;
 import data.util.JPAUtil;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class AbstractRepository<E> implements data.interfaces.Repository<E> {
+public class AbstractRepository<E> implements IRepository<E> {
 
     protected String persistenceUnitName;
     protected JPAUtil jpaUtil;

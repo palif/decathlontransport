@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `Status` (
     PRIMARY KEY (`statusId`)
 );
 
-CREATE TABLE IF NOT EXISTS `Transport` (
+CREATE TABLE IF NOT EXISTS `Transports` (
     `transportId` bigint(20) NOT NULL AUTO_INCREMENT,
     `deliveryDate` datetime(6) NOT NULL,
     `issueDate` datetime(6) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `Transport` (
     CONSTRAINT `fk_orderId_reference` FOREIGN KEY (`fk_orderId`) REFERENCES `Orders` (`orderId`)
 );
 
-CREATE TABLE IF NOT EXISTS `Product` (
+CREATE TABLE IF NOT EXISTS `Products` (
     `productId` bigint(20) NOT NULL,
     `name` varchar(255) DEFAULT NULL,
     `price` int(11) DEFAULT NULL,
