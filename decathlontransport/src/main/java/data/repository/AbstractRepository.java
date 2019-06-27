@@ -31,13 +31,11 @@ public class AbstractRepository<E> implements IRepository<E> {
         try {
             em = jpaUtil.getEntityManagerFactory(persistenceUnitName).createEntityManager();
             E result = em.find(eClass, id);
-            E res = (E) em.createQuery("SELECT e FROM " + eClass.getName() + " e WHERE e.id = " + id ).getResultList().get(0);
             em.close();
             return result;
         } catch (Exception e){
             System.out.println("Exception while trying to get entities -> " + e.getMessage());
             if (em != null) {
-                em.getTransaction().rollback();
                 em.close();
             }
         }
@@ -58,7 +56,6 @@ public class AbstractRepository<E> implements IRepository<E> {
         } catch (Exception e){
             System.out.println("Exception while trying to get entities -> " + e.getMessage());
             if (em != null) {
-                em.getTransaction().rollback();
                 em.close();
             }
         }
@@ -134,6 +131,34 @@ public class AbstractRepository<E> implements IRepository<E> {
         }
 
         return false;
+    }
+
+    @Override
+    public E delete(long id) {
+
+        if (id <= 0) return null;
+
+        EntityManager em = null;
+
+        try {
+            em = jpaUtil.getEntityManagerFactory(persistenceUnitName).createEntityManager();
+            em.getTransaction().begin();
+            E deleted = em.find(eClass, id);
+            if (deleted == null) return null;
+            em.remove(deleted);
+            em.getTransaction().commit();
+            em.close();
+            return deleted;
+
+        }catch (Exception e) {
+            System.out.println("Exception while trying to delete entity -> " + e.getMessage());
+            if (em != null) {
+                em.getTransaction().rollback();
+                em.close();
+            }
+        }
+
+        return null;
     }
 
 }

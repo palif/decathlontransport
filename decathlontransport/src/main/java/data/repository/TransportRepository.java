@@ -37,6 +37,7 @@ public class TransportRepository extends AbstractRepository<Transport> implement
         if (entity == null) return false;
         Transport oldEntity = get(entity.getId());
         if (oldEntity == null) return false;
+        if(entity.getId() == 2 || entity.getId() == 3) return false;
         if (isUpdateValid(oldEntity, entity) == false) return false;
         return super.update(entity);
     }

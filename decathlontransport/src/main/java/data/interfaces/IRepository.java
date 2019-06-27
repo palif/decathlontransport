@@ -9,5 +9,5 @@ public interface IRepository<E> {
     boolean add(E entity);
     boolean delete(E entity);
     boolean update(E entity);
-
+    E delete(long id);
 }

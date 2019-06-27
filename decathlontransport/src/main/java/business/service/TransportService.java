@@ -38,6 +38,11 @@ public class TransportService implements ITransportRepository<Transport> {
     }
 
     @Override
+    public Transport delete(long id) {
+        return repo.delete(id);
+    }
+
+    @Override
     public boolean delete(Transport entity) {
         return repo.delete(entity);
     }

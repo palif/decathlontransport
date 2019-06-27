@@ -40,6 +40,4 @@ CREATE TABLE IF NOT EXISTS `Products` (
     PRIMARY KEY (`productId`)
 );
 
-INSERT INTO Status(statusId,name) VALUES (1,'PENDING');
-INSERT INTO Status(statusId,name) VALUES (2,'DELIVERED');
-INSERT INTO Status(statusId,name) VALUES (3,'ABORTED');
+INSERT INTO Transports(deliveryDate, issueDate, fk_orderId, fk_statusId) VALUES ('2019-06-28', '2019-06-29', 1, 1);

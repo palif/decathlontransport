@@ -40,6 +40,9 @@ public class OrderService implements IOrderRepository<Order> {
     }
 
     @Override
+    public Order delete(long id) { return repo.delete(id); }
+
+    @Override
     public boolean delete(Order entity) {
         return repo.delete(entity);
     }
